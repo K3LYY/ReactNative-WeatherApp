@@ -95,32 +95,32 @@ const AirDetails = ({ SO2, NO2, PM10, PM25, O3, CO, system }: IAirDetails) => {
   };
 
   return (
-    <div className="place-content-evenly justify-center flex-wrap grid grid-cols-3 grid-rows-2">
-      <div className="detal">
-        <span className={`${checkPollution(SO2, "SO2")}`}>{SO2}</span>
-        <br /> {system} SO2
-      </div>
-      <div className="detal">
-        <span className={`${checkPollution(NO2, "NO2")}`}>{NO2}</span>
-        <br /> {system} NO2
-      </div>
-      <div className="detal">
-        <span className={`${checkPollution(PM10, "PM10")}`}>{PM10}</span>
-        <br /> {system} PM10
-      </div>
-      <div className="detal">
-        <span className={`${checkPollution(PM25, "PM25")}`}>{PM25}</span>
-        <br /> {system} PM2,5
-      </div>
-      <div className="detal">
-        <span className={`${checkPollution(O3, "O3")}`}>{O3}</span>
-        <br /> {system} O3
-      </div>
-      <div className="detal">
-        <span className={checkPollution(CO, "CO")}>{CO}</span>
-        <br /> {system} CO
-      </div>
-    </div>
+    <View className="place-content-evenly justify-center flex-wrap grid grid-cols-3 grid-rows-2">
+      <View className="detal">
+        <Text className={`${checkPollution(SO2, "SO2")}`}>{SO2}</Text>
+        {system} SO2
+      </View>
+      <View className="detal">
+        <Text className={`${checkPollution(NO2, "NO2")}`}>{NO2}</Text>
+        {system} NO2
+      </View>
+      <View className="detal">
+        <Text className={`${checkPollution(PM10, "PM10")}`}>{PM10}</Text>
+        {system} PM10
+      </View>
+      <View className="detal">
+        <Text className={`${checkPollution(PM25, "PM25")}`}>{PM25}</Text>
+        {system} PM2,5
+      </View>
+      <View className="detal">
+        <Text className={`${checkPollution(O3, "O3")}`}>{O3}</Text>
+        {system} O3
+      </View>
+      <View className="detal">
+        <Text className={checkPollution(CO, "CO")}>{CO}</Text>
+        {system} CO
+      </View>
+    </View>
   );
 };
 
