@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
 import { Styles } from "@/styles/Styles";
 import CityUserInput from "@/components/CityUserInput";
+import { useColorScheme } from "react-native";
 
 import {
   StyleSheet,
@@ -37,10 +38,18 @@ const OpenURLButton = ({ url, children }: OpenURLButtonProps) => {
 };
 
 export default function Index() {
+  const colorScheme = useColorScheme();
+
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? Styles.lightContainerColor
+      : Styles.darkContainerColor;
   const router = useRouter();
   return (
-    <View style={Styles.container}>
-      <Text style={[Styles.mainText, Styles.spacing]}>
+    <View style={[themeContainerStyle, Styles.container]}>
+      <Text style={[themeTextStyle, Styles.spacing, Styles.mainText]}>
         Sprawdź pogodę w swoim mieście
       </Text>
       <CityUserInput />
@@ -51,7 +60,7 @@ export default function Index() {
           flexDirection: "row",
         }}
       >
-        <Text style={[Styles.smallText, Styles.spacing]}>
+        <Text style={[Styles.smallText, Styles.spacing, themeTextStyle]}>
           Dostawcą danych pogodowych jest:
         </Text>
         <OpenURLButton url="https://openweathermap.org/">

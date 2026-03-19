@@ -4,7 +4,7 @@ import WeatherApi from "../WeatherInstanceApi";
 import { CityContext } from "../contexts/CityContext";
 import { useRouter } from "expo-router";
 import { Styles } from "@/styles/Styles";
-import { View, Pressable, Text, TextInput } from "react-native";
+import { View, Pressable, Text, TextInput, useColorScheme } from "react-native";
 
 const CityUserInput = () => {
   const [userInput, setUserInput] = useState<string>("");
@@ -28,21 +28,38 @@ const CityUserInput = () => {
       //setLoader(false)
     }
   };
+  const colorScheme = useColorScheme();
+
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? Styles.secondLightContainerColor
+      : Styles.secondDarkContainerColor;
+  const themeBorderStyle =
+    colorScheme === "light" ? Styles.lightBorder : Styles.darkBorder;
   return (
     <View style={[Styles.inputItems, Styles.spacing]}>
       <TextInput
         style={[
           Styles.text,
-          Styles.border,
+          themeBorderStyle,
           Styles.spacingInInput,
           Styles.spacing,
+          themeTextStyle,
+          themeContainerStyle,
         ]}
         placeholder="Wpisz nazwę miasta..."
         value={userInput}
         onChangeText={(text) => setUserInput(text)}
       />
       <Pressable
-        style={[Styles.border, Styles.spacingInInput, Styles.spacing]}
+        style={[
+          themeBorderStyle,
+          Styles.spacingInInput,
+          Styles.spacing,
+          themeContainerStyle,
+        ]}
         onPress={() => {
           getGeoData();
           console.log("dziala");

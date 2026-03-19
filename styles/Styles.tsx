@@ -5,11 +5,28 @@ export const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#8fe0ff",
   },
   mainText: {
-    fontWeight: "700",
-    fontSize: 26,
+    fontWeight: "500",
+    fontSize: 28,
+  },
+  lightTextColor: {
+    color: "#000000",
+  },
+  darkTextColor: {
+    color: "#ffffff",
+  },
+  lightContainerColor: {
+    backgroundColor: "#8fe0ff",
+  },
+  darkContainerColor: {
+    backgroundColor: "#2b235a",
+  },
+  secondLightContainerColor: {
+    backgroundColor: "#75b4e3",
+  },
+  secondDarkContainerColor: {
+    backgroundColor: "#54416d",
   },
   text: {
     fontWeight: "500",
@@ -21,10 +38,14 @@ export const Styles = StyleSheet.create({
   color: {
     color: "#ff0",
   },
-  border: {
+  lightBorder: {
     borderWidth: 2,
     borderColor: "#000",
-    backgroundColor: "#75b4e3",
+    borderRadius: 4,
+  },
+  darkBorder: {
+    borderWidth: 2,
+    borderColor: "#fff",
     borderRadius: 4,
   },
   inputItems: {
@@ -37,5 +58,13 @@ export const Styles = StyleSheet.create({
   spacing: {
     padding: 5,
     margin: 5,
+  },
+  tinyLogo: {
+    width: 40,
+    height: 40,
+  },
+  bigLogo: {
+    width: 200,
+    height: 200,
   },
 });

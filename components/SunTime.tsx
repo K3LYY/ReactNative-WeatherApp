@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
+import { Styles } from "@/styles/Styles";
 
 interface ISunTime {
   SunRiseTimeStamp: number;
@@ -8,14 +9,18 @@ interface ISunTime {
 const SunTime = ({ SunRiseTimeStamp, SunSetTimeStamp }: ISunTime) => {
   const SunRiseTime = new Date(SunRiseTimeStamp * 1000).toLocaleTimeString();
   const SunSetTime = new Date(SunSetTimeStamp * 1000).toLocaleTimeString();
+  const colorScheme = useColorScheme();
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
   return (
-    <View className="block place-content-evenly">
-      <View>
-        <Text>Wschód: {SunRiseTime}</Text>
-      </View>
-      <View>
-        <Text>Zachód: {SunSetTime}</Text>
-      </View>
+    <View>
+      <Text style={[themeTextStyle, Styles.smallText]}>
+        Wschód: {SunRiseTime}
+      </Text>
+
+      <Text style={[themeTextStyle, Styles.smallText]}>
+        Zachód: {SunSetTime}
+      </Text>
     </View>
   );
 };

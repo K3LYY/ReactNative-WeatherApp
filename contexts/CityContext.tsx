@@ -41,6 +41,7 @@ export const CityProvider = ({ children }: ICityContext) => {
     lat: "52.2319581",
   });
   const [favourites, setFavourites] = useState<TCityData[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -49,12 +50,21 @@ export const CityProvider = ({ children }: ICityContext) => {
         const lon = (await AsyncStorage.getItem("lon")) ?? "21.0067249";
         const lat = (await AsyncStorage.getItem("lat")) ?? "52.2319581";
         setCityData({ city, lon, lat });
+
         const favs = await AsyncStorage.getItem("favourites");
         if (favs) {
-          setFavourites(JSON.parse(favs));
+          try {
+            setFavourites(JSON.parse(favs));
+          } catch (parseError) {
+            console.error("Error parsing favourites:", parseError);
+            setFavourites([]);
+            await AsyncStorage.removeItem("favourites");
+          }
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error loading data:", error);
+      } finally {
+        setIsLoaded(true);
       }
     };
     loadData();
@@ -64,7 +74,13 @@ export const CityProvider = ({ children }: ICityContext) => {
   ).length;
 
   const addToFavourites = () => {
-    setFavourites((prev: TCityData[]) => [...prev, cityData]);
+    setFavourites((prev: TCityData[]) => {
+      const exists = prev.some(
+        (favCity: TCityData) => favCity.city === cityData.city,
+      );
+      if (exists) return prev;
+      return [...prev, cityData];
+    });
   };
 
   const removeFromFavourite = () => {
@@ -88,14 +104,15 @@ export const CityProvider = ({ children }: ICityContext) => {
 
   useEffect(() => {
     const saveFavourites = async () => {
+      if (!isLoaded) return;
       try {
         await AsyncStorage.setItem("favourites", JSON.stringify(favourites));
       } catch (error) {
-        console.error(error);
+        console.error("Error saving favourites:", error);
       }
     };
     saveFavourites();
-  }, [favourites]);
+  }, [favourites, isLoaded]);
 
   return (
     <CityContext

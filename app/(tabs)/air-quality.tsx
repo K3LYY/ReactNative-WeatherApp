@@ -2,8 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import WeatherApi from "@/WeatherInstanceApi";
 import { CityContext } from "@/contexts/CityContext";
 import AirDetails from "@/components/AirDetails";
-import { View, Text } from "react-native";
+import { View, Text, useColorScheme, StyleSheet } from "react-native";
 import { Styles } from "@/styles/Styles";
+
+const LegendColors = StyleSheet.create({
+  green: { backgroundColor: "#22c55e" },
+  lime: { backgroundColor: "#bef264" },
+  amber: { backgroundColor: "#fcd34d" },
+  orange: { backgroundColor: "#f97316" },
+  red: { backgroundColor: "#dc2626" },
+});
 
 const AirQualityPage = () => {
   const { city, lat, lon } = useContext(CityContext);
@@ -37,21 +45,29 @@ const AirQualityPage = () => {
   };
   useEffect(() => {
     getAirData();
-  }, []);
+  }, [city]);
+  const colorScheme = useColorScheme();
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? Styles.lightContainerColor
+      : Styles.darkContainerColor;
   return (
-    <View className="page" style={Styles.container}>
-      <Text>AirQualityPage</Text>
-      <Text>{city}</Text>
-      <Text>
-        Legenda: <Text className="bg-green-500">Bardzo dobrze</Text>
+    <View style={[Styles.container, themeContainerStyle]}>
+      <Text style={[Styles.mainText, themeTextStyle, Styles.spacing]}>
+        {city}
+      </Text>
+      <Text style={[Styles.spacing, themeTextStyle, Styles.text]}>
+        Legenda: <Text style={LegendColors.green}>Bardzo dobrze</Text>
         {" - "}
-        <Text className="bg-lime-300">Dobrze</Text>
+        <Text style={LegendColors.lime}>Dobrze</Text>
         {" - "}
-        <Text className="bg-amber-300">Średnio</Text>
+        <Text style={LegendColors.amber}>Średnio</Text>
         {" - "}
-        <Text className="bg-orange-500">Słabo</Text>
+        <Text style={LegendColors.orange}>Słabo</Text>
         {" - "}
-        <Text className="bg-red-600">Źle</Text>
+        <Text style={LegendColors.red}>Źle</Text>
       </Text>
       <AirDetails
         SO2={airData.SO2}

@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import { CityContext } from "../contexts/CityContext";
 import { Pressable, Image } from "react-native";
+import { Styles } from "@/styles/Styles";
 
 const FavouriteButton = () => {
   const { isInFavourite, addToFavourites, removeFromFavourite } =
@@ -21,6 +22,7 @@ const FavouriteButton = () => {
             ? require("../assets/images/starFull.png")
             : require("../assets/images/starEmpty.png")
         }
+        style={Styles.tinyLogo}
         className="w-10 h-10"
       ></Image>
     </Pressable>

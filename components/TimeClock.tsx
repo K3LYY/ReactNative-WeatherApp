@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
+import { Styles } from "@/styles/Styles";
 
 const TimeClock = () => {
   let time = new Date().toLocaleTimeString();
@@ -10,10 +11,13 @@ const TimeClock = () => {
     setTime(time);
   };
   setInterval(UpdateTime);
+  const colorScheme = useColorScheme();
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
 
   return (
     <View>
-      <Text>{ctime}</Text>
+      <Text style={[Styles.text, Styles.spacing, themeTextStyle]}>{ctime}</Text>
     </View>
   );
 };

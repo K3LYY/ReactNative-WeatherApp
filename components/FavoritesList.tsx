@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { useRouter } from "expo-router";
 import { CityContext } from "../contexts/CityContext";
-import { View, Text, Pressable, FlatList } from "react-native";
+import { View, Text, Pressable, FlatList, useColorScheme } from "react-native";
+import { Styles } from "@/styles/Styles";
 
 type TCityData = {
   city: string;
@@ -13,9 +14,25 @@ type ItemProps = { fav: TCityData };
 const FavoritesList = () => {
   const { favourites, setCityData } = useContext(CityContext);
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const themeBorderStyle =
+    colorScheme === "light" ? Styles.lightBorder : Styles.darkBorder;
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? Styles.secondLightContainerColor
+      : Styles.secondDarkContainerColor;
 
   const Item = ({ fav }: ItemProps) => (
-    <View className="max-w-3xl w-full">
+    <View
+      style={[
+        themeBorderStyle,
+        Styles.spacing,
+        themeContainerStyle,
+        { alignItems: "center" },
+      ]}
+    >
       <Pressable
         className="w-full h-full"
         onPress={() => {
@@ -23,7 +40,7 @@ const FavoritesList = () => {
           router.navigate("/(tabs)/weather");
         }}
       >
-        <Text>{fav.city}</Text>
+        <Text style={[Styles.text, themeTextStyle]}>{fav.city}</Text>
       </Pressable>
     </View>
   );
@@ -31,9 +48,10 @@ const FavoritesList = () => {
   if (favourites.length === 0) {
     return null;
   }
+
   return (
-    <View>
-      <Text>Ulubione miasta</Text>
+    <View style={[Styles.container, Styles.spacing]}>
+      <Text style={[Styles.mainText, themeTextStyle]}>Ulubione miasta</Text>
       <FlatList
         data={favourites}
         renderItem={({ item }) => <Item fav={item} />}

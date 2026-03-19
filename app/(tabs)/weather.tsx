@@ -6,7 +6,7 @@ import { CityContext } from "@/contexts/CityContext";
 import SunTime from "@/components/SunTime";
 import WeatherDetails from "@/components/WeatherDetails";
 import FavouriteButton from "@/components/FavouriteButton";
-import { View, Text } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
 import { Styles } from "@/styles/Styles";
 
 const WeatherPage = () => {
@@ -55,16 +55,28 @@ const WeatherPage = () => {
   useEffect(() => {
     getWeatherData();
   }, []);
+  const colorScheme = useColorScheme();
+
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? Styles.lightContainerColor
+      : Styles.darkContainerColor;
 
   return (
-    <View className="page" style={Styles.container}>
+    <View className="page" style={[themeContainerStyle, Styles.container]}>
       <View>
-        <Text style={Styles.mainText}>{city}</Text>
+        <Text style={[themeTextStyle, Styles.mainText, Styles.spacing]}>
+          {city}
+        </Text>
       </View>
       <FavouriteButton />
       <TimeClock />
       <WeatherIcon iconId={weatherData.icon} />
-      <Text>{weatherData.temperature}°C</Text>
+      <Text style={[Styles.mainText, themeTextStyle, Styles.spacing]}>
+        {weatherData.temperature}°C
+      </Text>
       <SunTime
         SunRiseTimeStamp={weatherData.sunrise}
         SunSetTimeStamp={weatherData.sunset}

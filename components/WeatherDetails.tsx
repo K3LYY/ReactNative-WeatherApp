@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
+import { Styles } from "@/styles/Styles";
 
 interface IWeatherDetails {
   windSpeed: number;
@@ -17,39 +18,49 @@ const WeatherDetails = ({
   cloudiness,
   feelsLike,
 }: IWeatherDetails) => {
+  const colorScheme = useColorScheme();
+
+  const themeTextStyle =
+    colorScheme === "light" ? Styles.lightTextColor : Styles.darkTextColor;
+  const themeContainerStyle =
+    colorScheme === "light"
+      ? Styles.secondLightContainerColor
+      : Styles.secondDarkContainerColor;
+  const themeBorderStyle =
+    colorScheme === "light" ? Styles.lightBorder : Styles.darkBorder;
   return (
-    <View className="place-content-evenly justify-center flex-wrap grid grid-cols-3 grid-rows-2">
-      <View className="detal">
-        <Text>Wiatr {windSpeed} m/s</Text>
-      </View>
-      <View className="detal">
-        <Text>
-          Wilgotność
-          {humidity} %
+    <View
+      className="place-content-evenly justify-center flex-wrap grid grid-cols-3 grid-rows-2"
+      style={[Styles.container, Styles.spacing]}
+    >
+      <View style={[themeBorderStyle, Styles.spacing, themeContainerStyle]}>
+        <Text style={[themeTextStyle, Styles.smallText]}>
+          Wiatr {windSpeed} m/s
         </Text>
       </View>
-      <View className="detal">
-        <Text>
-          Widoczność
-          {visibility} km
+      <View style={[themeBorderStyle, Styles.spacing, themeContainerStyle]}>
+        <Text style={[themeTextStyle, Styles.smallText]}>
+          Wilgotność {humidity} %
         </Text>
       </View>
-      <View className="detal">
-        <Text>
-          Ciśnienie
-          {pressure} hPa
+      <View style={[themeBorderStyle, Styles.spacing, themeContainerStyle]}>
+        <Text style={[themeTextStyle, Styles.smallText]}>
+          Widoczność {visibility} km
         </Text>
       </View>
-      <View className="detal">
-        <Text>
-          Zachmurzenie
-          {cloudiness} %
+      <View style={[themeBorderStyle, Styles.spacing, themeContainerStyle]}>
+        <Text style={[themeTextStyle, Styles.smallText]}>
+          Ciśnienie {pressure} hPa
         </Text>
       </View>
-      <View className="detal">
-        <Text>
-          Odczuwalna
-          {feelsLike}°C
+      <View style={[themeBorderStyle, Styles.spacing, themeContainerStyle]}>
+        <Text style={[themeTextStyle, Styles.smallText]}>
+          Zachmurzenie {cloudiness} %
+        </Text>
+      </View>
+      <View style={[themeBorderStyle, Styles.spacing, themeContainerStyle]}>
+        <Text style={[themeTextStyle, Styles.smallText]}>
+          Odczuwalna {feelsLike}°C
         </Text>
       </View>
     </View>
